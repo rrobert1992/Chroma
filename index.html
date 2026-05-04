@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chroma — Colour Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #ffffff;
+  --bg-soft:  #f8f8f7;
+  --bg-muted: #f2f1ef;
+  --border:   #e8e6e2;
+  --border-md:#d4d1cb;
+  --text:     #1a1916;
+  --text-2:   #6b6760;
+  --text-3:   #a8a49e;
+  --accent:   #1a1916;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --mono: 'DM Mono', monospace;
+  --r: 6px;
+  --r-lg: 10px;
+}
+
+html { font-size: 15px; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); font-weight: 300; line-height: 1.5; min-height: 100vh; }
+
+/* ── TOPBAR ── */
+.topbar {
+  height: 52px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  position: sticky; top: 0;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+}
+
+.logo {
+  font-size: 17px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.logo em { font-style: italic; color: var(--text-2); }
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-3);
+  font-family: var(--mono);
+}
+
+.breadcrumb .sep { color: var(--border-md); }
+.breadcrumb .active { color: var(--text-2); }
+
+.topbar-right { font-size: 12px; color: var(--text-3); font-family: var(--mono); }
+
+/* ── PAGES ── */
+.page { display: none; }
+.page.on { display: block; animation: up 0.28s ease both; }
+@keyframes up { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+
+/* ═══ PAGE 1 ═══ */
+.p1-wrap {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 72px 24px 80px;
+}
+
+.p1-eyebrow {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+  margin-bottom: 20px;
+}
+
+.p1-heading {
+  font-size: 34px;
+  font-weight: 300;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.p1-heading em { font-style: italic; color: var(--text-2); }
+
+.p1-sub {
+  font-size: 14px;
+  color: var(--text-2);
+  line-height: 1.7;
+  margin-bottom: 40px;
+  max-width: 480px;
+}
+
+.input-wrap {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.main-input {
+  width: 100%;
+  padding: 14px 120px 14px 16px;
+  border: 1px solid var(--border-md);
+  border-radius: var(--r-lg);
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 300;
+  color: var(--text);
+  background: var(--bg);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.main-input:focus { border-color: var(--text); }
+.main-input::placeholder { color: var(--text-3); }
+
+.input-btn {
+  position: absolute;
+  right: 6px; top: 50%;
+  transform: translateY(-50%);
+  padding: 7px 16px;
+  background: var(--text);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.input-btn:hover { opacity: 0.75; }
+
+.p1-hint { font-size: 12px; color: var(--text-3); margin-bottom: 40px; }
+
+.p1-section-label {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text-3);
+  letter-spacing: 0.06em;
+  margin-bottom: 12px;
+}
+
+.preset-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-bottom: 40px;
+}
+
+.preset-tag {
+  padding: 6px 13px;
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  font-size: 12px;
+  color: var(--text-2);
+  cursor: pointer;
+  background: var(--bg-soft);
+  transition: all 0.13s;
+  font-family: var(--sans);
+  font-weight: 300;
+}
+
+.preset-tag:hover { border-color: var(--border-md); color: var(--text); background: var(--bg); }
+
+/* ═══ PAGE 2 ═══ */
+.p2-wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 48px 32px 80px;
+}
+
+.p2-toprow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 40px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.p2-project {
+  font-size: 22px;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.p2-project em { font-style: italic; color: var(--text-2); }
+
+.p2-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; }
+
+.btn {
+  padding: 8px 18px;
+  border-radius: var(--r);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.13s;
+  border: 1px solid var(--border-md);
+  background: var(--bg);
+  color: var(--text-2);
+}
+
+.btn:hover { border-color: var(--text); color: var(--text); }
+
+.btn-primary {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+  padding: 8px 22px;
+}
+
+.btn-primary:hover { opacity: 0.8; }
+.btn-primary:disabled { opacity: 0.35; cursor: not-allowed; }
+
+.sel-count {
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--text-3);
+}
+
+/* domain group */
+.domain-group { margin-bottom: 36px; }
+
+.group-label {
+  font-size: 10px;
+  font-family: var(--mono);
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.domain-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+}
+
+.dtile {
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 14px 14px 12px;
+  cursor: pointer;
+  background: var(--bg-soft);
+  transition: all 0.14s;
+  user-select: none;
+  position: relative;
+}
+
+.dtile:hover { border-color: var(--border-md); background: var(--bg); }
+
+.dtile.sel {
+  border-color: var(--text);
+  background: var(--bg);
+}
+
+.dtile.sel::after {
+  content: '✓';
+  position: absolute;
+  top: 9px; right: 11px;
+  font-size: 10px;
+  color: var(--text-2);
+}
+
+.dtile-icon { font-size: 20px; margin-bottom: 8px; display: block; line-height: 1; }
+.dtile-name { font-size: 12px; font-weight: 400; color: var(--text); margin-bottom: 3px; line-height: 1.3; }
+.dtile-hint { font-size: 10px; color: var(--text-3); line-height: 1.4; }
+
+.p2-footer {
+  position: sticky;
+  bottom: 0;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--border);
+  padding: 14px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.p2-footer-text { font-size: 12px; color: var(--text-3); }
+
+/* ═══ PAGE 3 ═══ */
+.p3-wrap {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 48px 32px 100px;
+}
+
+.p3-toprow {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 48px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.p3-title { font-size: 26px; font-weight: 300; letter-spacing: -0.01em; }
+.p3-sub { font-size: 13px; color: var(--text-2); margin-top: 5px; line-height: 1.6; max-width: 500px; }
+.p3-meta { font-size: 11px; font-family: var(--mono); color: var(--text-3); text-align: right; line-height: 1.9; }
+
+/* palette row */
+.pal-row {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  border-top: 1px solid var(--border);
+  animation: up 0.3s ease both;
+}
+
+.pal-row:last-child { border-bottom: 1px solid var(--border); }
+
+.pal-left {
+  padding: 32px 28px 32px 0;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pal-domain-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-family: var(--mono);
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+}
+
+.pal-name {
+  font-size: 20px;
+  font-weight: 300;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.pal-mood {
+  font-size: 12px;
+  color: var(--text-3);
+  font-style: italic;
+}
+
+.pal-strip {
+  display: flex;
+  height: 52px;
+  border-radius: var(--r);
+  overflow: hidden;
+}
+
+.ps-swatch {
+  flex: 1;
+  cursor: pointer;
+  transition: flex 0.18s ease;
+  position: relative;
+}
+
+.ps-swatch:hover { flex: 2.2; }
+
+.ps-tip {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 5px 4px 4px;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.13s;
+  text-align: center;
+}
+
+.ps-swatch:hover .ps-tip { opacity: 1; }
+
+.ps-tip-hex {
+  display: block;
+  font-family: var(--mono);
+  font-size: 8px;
+  color: rgba(255,255,255,0.9);
+}
+
+.pal-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.pchip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px 3px 4px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--text-2);
+  background: var(--bg-soft);
+  transition: border-color 0.12s;
+}
+
+.pchip:hover { border-color: var(--border-md); }
+
+.pchip-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.pchip-hex { font-family: var(--mono); font-size: 9px; color: var(--text-3); }
+
+.pal-right {
+  padding: 32px 0 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.pal-ref-box {
+  padding: 16px 18px;
+  background: var(--bg-soft);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+}
+
+.ref-kicker {
+  font-size: 9px;
+  font-family: var(--mono);
+  color: var(--text-3);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.ref-title {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 7px;
+  font-style: italic;
+}
+
+.ref-body { font-size: 12px; color: var(--text-2); line-height: 1.7; }
+
+.pal-section-label {
+  font-size: 10px;
+  font-family: var(--mono);
+  color: var(--text-3);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 7px;
+}
+
+.pal-body-text { font-size: 12px; color: var(--text-2); line-height: 1.75; }
+
+.usage-row {
+  display: flex;
+  gap: 8px;
+}
+
+.usage-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.usage-swatch {
+  width: 44px; height: 44px;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+  transition: transform 0.13s;
+}
+
+.usage-item:hover .usage-swatch { transform: scale(1.08); }
+
+.usage-role {
+  font-size: 9px;
+  font-family: var(--mono);
+  color: var(--text-3);
+  text-align: center;
+  letter-spacing: 0.04em;
+}
+
+/* loading */
+.loading-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  min-height: 60vh; gap: 18px; text-align: center;
+}
+
+.spin {
+  width: 36px; height: 36px;
+  border: 1.5px solid var(--border-md);
+  border-top-color: var(--text);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loading-text { font-size: 14px; font-weight: 300; color: var(--text-2); }
+.loading-domains { font-size: 11px; font-family: var(--mono); color: var(--text-3); max-width: 480px; line-height: 1.8; }
+
+/* toast */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--text); color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: var(--mono);
+  opacity: 0; transform: translateY(6px);
+  transition: all 0.18s ease;
+  pointer-events: none; z-index: 9999;
+}
+
+.toast.on { opacity: 1; transform: none; }
+
+/* ── HEX EDITOR ── */
+.pchip { position: relative; }
+.pchip-edit {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 6px 3px 4px;
+  background: var(--bg);
+  border: 1px solid var(--text);
+  border-radius: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s;
+  z-index: 2;
+}
+.pchip-edit.visible { opacity: 1; pointer-events: all; }
+.pchip-edit input {
+  width: 72px;
+  border: none;
+  outline: none;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text);
+  background: transparent;
+  padding: 0;
+}
+.pchip-edit-ok {
+  font-size: 10px;
+  cursor: pointer;
+  color: var(--text-2);
+  background: none;
+  border: none;
+  font-family: var(--mono);
+  padding: 0 2px;
+  line-height: 1;
+}
+.pchip-edit-ok:hover { color: var(--text); }
+.pchip-edit-cancel {
+  font-size: 10px;
+  cursor: pointer;
+  color: var(--text-3);
+  background: none;
+  border: none;
+  font-family: var(--mono);
+  padding: 0;
+  line-height: 1;
+}
+
+/* ── REFRESH BTN ── */
+.pal-actions {
+  display: flex;
+  gap: 7px;
+  margin-top: 2px;
+}
+.pal-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: var(--sans);
+  font-weight: 300;
+  color: var(--text-2);
+  background: var(--bg-soft);
+  cursor: pointer;
+  transition: all 0.13s;
+}
+.pal-action-btn:hover { border-color: var(--border-md); color: var(--text); background: var(--bg); }
+.pal-action-btn.loading { opacity: 0.45; pointer-events: none; }
+.pal-action-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
+
+/* ── SHADES PANEL ── */
+.shades-panel {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--bg-soft);
+  border-radius: var(--r-lg);
+  border: 1px solid var(--border);
+  margin-top: 2px;
+}
+.shades-panel.open { display: flex; }
+.shades-row {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.shades-label {
+  font-size: 10px;
+  font-family: var(--mono);
+  color: var(--text-3);
+  letter-spacing: 0.05em;
+}
+.shades-strip {
+  display: flex;
+  height: 32px;
+  border-radius: 4px;
+  overflow: hidden;
+  gap: 1px;
+}
+.shade-cell {
+  flex: 1;
+  cursor: pointer;
+  position: relative;
+  transition: flex 0.15s;
+}
+.shade-cell:hover { flex: 2; }
+.shade-cell-tip {
+  position: absolute;
+  bottom: 2px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--mono);
+  font-size: 7px;
+  color: rgba(255,255,255,0.85);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.1s;
+  pointer-events: none;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.shade-cell:hover .shade-cell-tip { opacity: 1; }
+
+/* util */
+.sr-only { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0); }
+
+@media (max-width: 700px) {
+  .p2-wrap, .p3-wrap { padding: 32px 16px 80px; }
+  .domain-tiles { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  .pal-row { grid-template-columns: 1fr; }
+  .pal-left { border-right: none; border-bottom: 1px solid var(--border); padding: 24px 0; }
+  .pal-right { padding: 24px 0; }
+  .topbar { padding: 0 16px; }
+  .p2-footer { padding: 12px 16px; }
+}
+</style>
+</head>
+<body>
+<h1 class="sr-only">Chroma — Colour Intelligence for Designers</h1>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="logo">Chroma<em>.</em></div>
+  <div class="breadcrumb" id="breadcrumb">
+    <span class="active">Project</span>
+  </div>
+  <div class="topbar-right" id="topbar-right"></div>
+</header>
+
+<!-- PAGE 1 -->
+<div class="page on" id="pg1">
+  <div class="p1-wrap">
+    <p class="p1-eyebrow">colour intelligence tool</p>
+    <h2 class="p1-heading">What are you<br><em>designing?</em></h2>
+    <p class="p1-sub">Describe your project. We'll source colour palettes from visual domains across art, nature, craft, architecture and beyond — each grounded in a specific cultural or historical reference.</p>
+
+    <div class="input-wrap">
+      <input class="main-input" id="q-input" type="text" placeholder="e.g. a luxury fintech app, organic skincare brand, kids learning platform…" autocomplete="off"/>
+      <button class="input-btn" onclick="goP2()">Continue →</button>
+    </div>
+    <p class="p1-hint">Press enter or click continue to choose your visual domains</p>
+
+    <p class="p1-section-label">quick starts</p>
+    <div class="preset-grid" id="presets"></div>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="pg2">
+  <div class="p2-wrap">
+    <div class="p2-toprow">
+      <div>
+        <div style="font-size:11px;font-family:var(--mono);color:var(--text-3);margin-bottom:6px">your project</div>
+        <div class="p2-project" id="p2-proj"></div>
+      </div>
+      <div class="p2-actions">
+        <span class="sel-count" id="sel-count">0 selected</span>
+        <button class="btn" onclick="toggleAll()" id="tog-btn">Select all</button>
+        <button class="btn" onclick="goP1()">← Back</button>
+      </div>
+    </div>
+
+    <div id="domain-groups"></div>
+  </div>
+
+  <div class="p2-footer">
+    <span class="p2-footer-text">Each domain generates one curated palette rooted in a real-world reference.</span>
+    <button class="btn-primary btn" id="gen-btn" onclick="generate()" disabled>Generate palettes →</button>
+  </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="pg3">
+  <div class="p3-wrap" id="p3-inner"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── DATA ── */
+const PRESETS = [
+  'Luxury fintech & private banking','Organic skincare & beauty brand',
+  'Kids education platform','Cybersecurity SaaS product',
+  'Sustainable fashion label','High-end hospitality & hotel',
+  'Health & wellness app','Independent music label',
+  'Urban architecture firm','Premium coffee roaster',
+  'Creative design studio','Electric vehicle brand',
+  'Pharmaceutical & healthcare','Art gallery & cultural institution',
+  'Sports performance brand','Residential real estate',
+];
+
+const DOMAIN_GROUPS = [
+  {
+    group: 'Visual Arts',
+    domains: [
+      { id:'painting',     icon:'🎨', name:'Painting',           hint:'Oil, watercolour, fresco traditions' },
+      { id:'photography',  icon:'📷', name:'Photography',        hint:'Documentary, fine-art, analogue' },
+      { id:'printmaking',  icon:'🖨', name:'Printmaking',        hint:'Woodblock, risograph, lithograph' },
+      { id:'sculpture',    icon:'🗿', name:'Sculpture & Form',   hint:'Material, patina, monumental scale' },
+      { id:'illustration', icon:'✏️', name:'Illustration',       hint:'Editorial, botanical, folk art' },
+      { id:'collage',      icon:'✂️', name:'Collage & Mixed',    hint:'Found material, Dada, zines' },
+      { id:'street-art',   icon:'🏙', name:'Street Art & Murals',hint:'Graffiti culture, public commissions' },
+    ]
+  },
+  {
+    group: 'Design & Craft',
+    domains: [
+      { id:'ceramics',     icon:'🏺', name:'Ceramics & Pottery', hint:'Glaze, earthenware, Mingei movement' },
+      { id:'textiles',     icon:'🧵', name:'Textiles & Weaving',  hint:'Shibori, tapestry, ikat, batik' },
+      { id:'glass',        icon:'🫙', name:'Glass & Crystal',    hint:'Murano, stained glass, borosilicate' },
+      { id:'metalwork',    icon:'⚙️', name:'Metalwork & Casting', hint:'Bronze, wrought iron, jewellery' },
+      { id:'typography',   icon:'Aa', name:'Typography & Print',  hint:'Bauhaus, Swiss style, letterpress' },
+      { id:'furniture',    icon:'🪑', name:'Furniture & Objects', hint:'Eames, Prouvé, Scandinavian form' },
+      { id:'fashion',      icon:'👗', name:'Fashion & Couture',   hint:'Seasonal collections, textile mills' },
+    ]
+  },
+  {
+    group: 'Natural World',
+    domains: [
+      { id:'flora',        icon:'🌸', name:'Flora & Botanicals',  hint:'Blossom, foliage, pressed flowers' },
+      { id:'geology',      icon:'🪨', name:'Geology & Minerals',  hint:'Geodes, sediment, volcanic basalt' },
+      { id:'ocean',        icon:'🌊', name:'Ocean & Marine',      hint:'Coral reefs, bioluminescence, tides' },
+      { id:'forest',       icon:'🌲', name:'Forest & Woodland',   hint:'Canopy, fungi, autumn leaf litter' },
+      { id:'desert',       icon:'🏜', name:'Desert & Arid Lands', hint:'Dunes, sandstone, salt flats' },
+      { id:'sky',          icon:'🌤', name:'Sky & Atmosphere',    hint:'Dusk, storms, Nordic light' },
+      { id:'space',        icon:'🔭', name:'Space & Cosmos',      hint:'Nebulae, aurora, deep sky imaging' },
+    ]
+  },
+  {
+    group: 'Built Environment',
+    domains: [
+      { id:'architecture', icon:'🏛', name:'Architecture',        hint:'Brutalism, Japandi, Carlo Scarpa' },
+      { id:'interiors',    icon:'🛋', name:'Interiors & Spaces',  hint:'Wabi-sabi, maximalist, hospitality' },
+      { id:'urban',        icon:'🌆', name:'Urban & City',        hint:'Night markets, facades, signage' },
+      { id:'sacred',       icon:'⛩', name:'Sacred Spaces',       hint:'Temples, cathedrals, mosques' },
+      { id:'industrial',   icon:'🏭', name:'Industrial Heritage', hint:'Factory patina, rust, raw concrete' },
+      { id:'garden',       icon:'🌿', name:'Garden & Landscape',  hint:'Japanese gardens, English estates' },
+    ]
+  },
+  {
+    group: 'Screen & Performance',
+    domains: [
+      { id:'film',         icon:'🎞', name:'Film & Cinematography',hint:'Colour grading, Kubrick, Wong Kar-wai' },
+      { id:'animation',    icon:'🎬', name:'Animation & Motion',  hint:'Studio Ghibli, vintage cel, 3D render' },
+      { id:'theatre',      icon:'🎭', name:'Theatre & Stage',     hint:'Lighting design, costume, scenography' },
+      { id:'gaming',       icon:'🎮', name:'Gaming & Pixel Art',  hint:'Retro palettes, concept art, UI skins' },
+      { id:'dance',        icon:'💃', name:'Dance & Movement',    hint:'Ballet, hip-hop, flamenco costuming' },
+    ]
+  },
+  {
+    group: 'Culture & Society',
+    domains: [
+      { id:'heritage',     icon:'🗺', name:'Cultural Heritage',   hint:'Kente, Moroccan zellige, Oaxacan craft' },
+      { id:'food',         icon:'🍽', name:'Food & Culinary',     hint:'Kaiseki, spice markets, fermentation' },
+      { id:'music',        icon:'🎵', name:'Music & Sound',       hint:'ECM, Blue Note, album art tradition' },
+      { id:'sport',        icon:'⚡', name:'Sport & Athletics',   hint:'Olympic identity, racing liveries' },
+      { id:'ritual',       icon:'🕯', name:'Ritual & Ceremony',   hint:'Festivals, weddings, funerary culture' },
+      { id:'literature',   icon:'📖', name:'Literature & Books',  hint:'Penguin Classics, Taschen, Phaidon' },
+      { id:'science',      icon:'🔬', name:'Science & Research',  hint:'Data viz, lab culture, specimen plates' },
+    ]
+  },
+  {
+    group: 'Digital & Media',
+    domains: [
+      { id:'ui-design',    icon:'💻', name:'UI & Interface',      hint:'Glassmorphism, flat design, brutalist UI' },
+      { id:'social',       icon:'📱', name:'Social & Digital',    hint:'Platform aesthetics, meme culture' },
+      { id:'advertising',  icon:'📢', name:'Advertising & OOH',   hint:'Bauhaus posters, Saul Bass, Swiss style' },
+      { id:'branding',     icon:'🔖', name:'Branding & Identity', hint:'Monogram, colour systems, Pentagram era' },
+      { id:'packaging',    icon:'📦', name:'Packaging & Product', hint:'Apothecary, Japanese MUJI, Dieter Rams' },
+    ]
+  },
+];
+
+/* ── STATE ── */
+let project = '';
+let selected = new Set();
+let allSel = false;
+
+/* ── INIT ── */
+document.getElementById('presets').innerHTML = PRESETS.map(p =>
+  `<button class="preset-tag" onclick="setQ(this.dataset.v)" data-v="${p}">${p}</button>`
+).join('');
+
+document.getElementById('q-input').addEventListener('keydown', e => { if (e.key==='Enter') goP2(); });
+
+/* ── NAV ── */
+function show(id) {
+  ['pg1','pg2','pg3'].forEach(p => {
+    document.getElementById(p).classList.toggle('on', p===id);
+  });
+}
+
+function setBreadcrumb(step, proj) {
+  const bc = document.getElementById('breadcrumb');
+  const tr = document.getElementById('topbar-right');
+  if (step === 1) {
+    bc.innerHTML = '<span class="active">Project</span>';
+    tr.textContent = '';
+  } else if (step === 2) {
+    bc.innerHTML = `<span class="active">Domains</span>`;
+    tr.textContent = proj.length > 32 ? proj.slice(0,32)+'…' : proj;
+  } else {
+    bc.innerHTML = `<span class="active">Palettes</span>`;
+    tr.textContent = proj.length > 32 ? proj.slice(0,32)+'…' : proj;
+  }
+}
+
+function setQ(v) {
+  document.getElementById('q-input').value = v;
+  goP2();
+}
+
+function goP1() {
+  show('pg1'); setBreadcrumb(1,'');
+}
+
+function goP2() {
+  const v = document.getElementById('q-input').value.trim();
+  if (!v) { document.getElementById('q-input').focus(); return; }
+  project = v;
+  document.getElementById('p2-proj').innerHTML = '<em>"</em>' + v + '<em>"</em>';
+  renderDomainGroups();
+  show('pg2');
+  setBreadcrumb(2, v);
+}
+
+/* ── DOMAINS ── */
+function renderDomainGroups() {
+  const wrap = document.getElementById('domain-groups');
+  wrap.innerHTML = '';
+  DOMAIN_GROUPS.forEach(g => {
+    const sec = document.createElement('div');
+    sec.className = 'domain-group';
+    sec.innerHTML = `<div class="group-label">${g.group}</div><div class="domain-tiles"></div>`;
+    const grid = sec.querySelector('.domain-tiles');
+    g.domains.forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'dtile' + (selected.has(d.id) ? ' sel' : '');
+      el.innerHTML = `<span class="dtile-icon">${d.icon}</span><div class="dtile-name">${d.name}</div><div class="dtile-hint">${d.hint}</div>`;
+      el.onclick = () => {
+        if (selected.has(d.id)) selected.delete(d.id);
+        else selected.add(d.id);
+        el.classList.toggle('sel');
+        updateCount();
+      };
+      grid.appendChild(el);
+    });
+    wrap.appendChild(sec);
+  });
+  updateCount();
+}
+
+function toggleAll() {
+  allSel = !allSel;
+  if (allSel) DOMAIN_GROUPS.forEach(g => g.domains.forEach(d => selected.add(d.id)));
+  else selected.clear();
+  document.getElementById('tog-btn').textContent = allSel ? 'Deselect all' : 'Select all';
+  renderDomainGroups();
+}
+
+function updateCount() {
+  const n = selected.size;
+  document.getElementById('sel-count').textContent = n + ' domain' + (n!==1?'s':'') + ' selected';
+  document.getElementById('gen-btn').disabled = n === 0;
+}
+
+/* ── GENERATE ── */
+const BATCH_SIZE = 5; // max domains per API call to stay within token limits
+
+function makeSys(count) {
+  return `You are the world's leading colour strategist and cultural chromatic researcher. You produce colour palettes for professional designers sourced from specific, named real-world references within visual domains.
+
+RETURN ONLY VALID JSON. No markdown, no backticks, no preamble. Start your response with { and end with }.
+
+Schema:
+{
+  "industry": "Short refined label for the project (max 5 words)",
+  "summary": "2 sentences on colour strategy for this specific project type.",
+  "palettes": [
+    {
+      "name": "Evocative 2-4 word palette name",
+      "mood": "Sharp 1-line mood (max 8 words)",
+      "domain": "exact domain name from the list",
+      "domain_icon": "single emoji",
+      "reference": "Specific real named reference (e.g. Hiroshi Sugimoto Seascapes series, Barbican Brutalist concrete, Nishiki Market Kyoto)",
+      "story": "2-3 sentences citing real names, places, movements, materials and how they translate to colour for this project.",
+      "psychology": "2-3 sentences on colour psychology for this industry audience.",
+      "colors": [
+        { "name": "Poetic evocative name", "hex": "#xxxxxx", "role": "primary" },
+        { "name": "Poetic evocative name", "hex": "#xxxxxx", "role": "secondary" },
+        { "name": "Poetic evocative name", "hex": "#xxxxxx", "role": "accent" },
+        { "name": "Poetic evocative name", "hex": "#xxxxxx", "role": "background" },
+        { "name": "Poetic evocative name", "hex": "#xxxxxx", "role": "text" }
+      ]
+    }
+  ]
+}
+
+Rules:
+- Exactly one palette per domain (${count} total), same order as given
+- Exactly 5 colors per palette, valid lowercase 6-digit hex codes
+- Each palette tonally distinct — no two with the same base tone
+- reference must be a specific REAL named thing, never vague
+- Color names must be poetic — never generic like dark green or light grey`;
+}
+
+async function callAPI(project, domainBatch, isFirst) {
+  const sys = makeSys(domainBatch.length);
+  const msg = `Project: ${project}\nDomains: ${domainBatch.join(', ')}${isFirst ? '' : '\n\nNote: omit the industry and summary fields, return only the palettes array wrapped in {"palettes":[...]}'}`;
+  const res = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: 4096,
+      system: sys,
+      messages: [{ role: 'user', content: msg }]
+    })
+  });
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err?.error?.message || `HTTP ${res.status}`);
+  }
+  const data = await res.json();
+  if (data.error) throw new Error(data.error.message || 'API error');
+  const raw = (data.content?.find(b => b.type === 'text')?.text || '').replace(/```json|```/g, '').trim();
+  return JSON.parse(raw);
+}
+
+async function generate() {
+  const allDomains = DOMAIN_GROUPS.flatMap(g => g.domains);
+  const selDomains = allDomains.filter(d => selected.has(d.id));
+  const domainNames = selDomains.map(d => d.name);
+
+  show('pg3');
+  setBreadcrumb(3, project);
+
+  const p3 = document.getElementById('p3-inner');
+  p3.innerHTML = `
+    <div class="loading-wrap">
+      <div class="spin"></div>
+      <div class="loading-text" id="load-text">Curating across ${domainNames.length} domain${domainNames.length !== 1 ? 's' : ''}…</div>
+      <div class="loading-domains">${domainNames.join(' · ')}</div>
+    </div>
+  `;
+
+  try {
+    // Split into batches of BATCH_SIZE
+    const batches = [];
+    for (let i = 0; i < domainNames.length; i += BATCH_SIZE) {
+      batches.push(domainNames.slice(i, i + BATCH_SIZE));
+    }
+
+    let allPalettes = [];
+    let industryData = null;
+
+    for (let b = 0; b < batches.length; b++) {
+      const loadEl = document.getElementById('load-text');
+      if (loadEl) loadEl.textContent = `Generating batch ${b + 1} of ${batches.length}…`;
+      const result = await callAPI(project, batches[b], b === 0);
+      if (b === 0) {
+        industryData = result;
+        allPalettes = allPalettes.concat(result.palettes || []);
+      } else {
+        allPalettes = allPalettes.concat(result.palettes || []);
+      }
+    }
+
+    industryData.palettes = allPalettes;
+    renderResults(industryData, domainNames);
+
+  } catch(e) {
+    console.error('Chroma error:', e);
+    p3.innerHTML = `
+      <div style="padding:3rem 2rem;text-align:center;max-width:500px;margin:0 auto">
+        <div style="font-size:13px;color:var(--text-2);margin-bottom:8px">Something went wrong generating your palettes.</div>
+        <div style="font-size:11px;font-family:var(--mono);color:var(--text-3);margin-bottom:20px;word-break:break-word">${e.message || 'Unknown error'}</div>
+        <button class="btn" onclick="goP2()">← Go back and try again</button>
+      </div>
+    `;
+  }
+}
+
+/* ── COLOUR MATH ── */
+function hexToHsl(hex) {
+  let r = parseInt(hex.slice(1,3),16)/255;
+  let g = parseInt(hex.slice(3,5),16)/255;
+  let b = parseInt(hex.slice(5,7),16)/255;
+  const max = Math.max(r,g,b), min = Math.min(r,g,b);
+  let h,s,l = (max+min)/2;
+  if (max===min) { h=s=0; } else {
+    const d = max-min;
+    s = l>0.5 ? d/(2-max-min) : d/(max+min);
+    switch(max) {
+      case r: h=((g-b)/d+(g<b?6:0))/6; break;
+      case g: h=((b-r)/d+2)/6; break;
+      default: h=((r-g)/d+4)/6;
+    }
+  }
+  return [h*360, s*100, l*100];
+}
+
+function hslToHex(h,s,l) {
+  h/=360; s/=100; l/=100;
+  let r,g,b;
+  if (s===0) { r=g=b=l; } else {
+    const hue2rgb=(p,q,t)=>{if(t<0)t+=1;if(t>1)t-=1;if(t<1/6)return p+(q-p)*6*t;if(t<1/2)return q;if(t<2/3)return p+(q-p)*(2/3-t)*6;return p;};
+    const q=l<0.5?l*(1+s):l+s-l*s, p=2*l-q;
+    r=hue2rgb(p,q,h+1/3); g=hue2rgb(p,q,h); b=hue2rgb(p,q,h-1/3);
+  }
+  return '#'+[r,g,b].map(x=>Math.round(x*255).toString(16).padStart(2,'0')).join('');
+}
+
+function generateShades(hex) {
+  const [h,s] = hexToHsl(hex);
+  // 9 shades from lightest (95% L) to darkest (10% L)
+  return [95,85,75,62,50,38,28,18,10].map(l => hslToHex(h, Math.min(s, s*(l<50?1.1:0.9)), l));
+}
+
+function isValidHex(v) { return /^#[0-9a-fA-F]{6}$/.test(v); }
+
+/* ── PALETTE STATE (for editing) ── */
+let palettesData = [];
+
+function renderResults(data, domainNames) {
+  palettesData = data.palettes.map(p => ({ ...p, colors: p.colors.map(c => ({ ...c })) }));
+  const el = document.getElementById('p3-inner');
+
+  el.innerHTML = `
+    <div class="p3-toprow">
+      <div>
+        <div class="p3-title">${data.industry}</div>
+        <div class="p3-sub">${data.summary}</div>
+      </div>
+      <div class="p3-meta">
+        ${palettesData.length} palette${palettesData.length!==1?'s':''}<br>
+        ${domainNames.length} domain${domainNames.length!==1?'s':''}<br>
+        <span style="color:var(--text-2)">${project.length>28?project.slice(0,28)+'…':project}</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:40px">
+      <button class="btn" onclick="goP1()">← New project</button>
+      <button class="btn" onclick="goP2()">← Change domains</button>
+    </div>
+    <div class="pal-list" id="pal-list"></div>
+  `;
+
+  renderAllPalettes();
+}
+
+function renderAllPalettes() {
+  const list = document.getElementById('pal-list');
+  if (!list) return;
+  list.innerHTML = '';
+  palettesData.forEach((p, pi) => renderPaletteRow(p, pi, list));
+}
+
+function renderPaletteRow(p, pi, container) {
+  const row = document.createElement('div');
+  row.className = 'pal-row';
+  row.id = `pal-${pi}`;
+  row.style.animationDelay = (pi * 0.05) + 's';
+
+  const swatches = p.colors.map((c,ci) =>
+    `<div class="ps-swatch" style="background:${c.hex}" onclick="copyHex('${c.hex}')" title="${c.hex}">
+      <div class="ps-tip"><span class="ps-tip-hex">${c.hex}</span></div>
+    </div>`
+  ).join('');
+
+  const chips = p.colors.map((c, ci) => `
+    <div class="pchip" id="chip-${pi}-${ci}" onclick="startEdit(${pi},${ci},event)">
+      <div class="pchip-dot" id="chip-dot-${pi}-${ci}" style="background:${c.hex}"></div>
+      <span id="chip-name-${pi}-${ci}">${c.name}</span>
+      <span class="pchip-hex" id="chip-hex-${pi}-${ci}">${c.hex}</span>
+      <div class="pchip-edit" id="edit-${pi}-${ci}">
+        <div class="pchip-dot" id="edit-dot-${pi}-${ci}" style="background:${c.hex}"></div>
+        <input id="edit-input-${pi}-${ci}" type="text" value="${c.hex}" maxlength="7"
+          oninput="previewEdit(${pi},${ci},this.value)"
+          onkeydown="editKeydown(event,${pi},${ci})"
+          onclick="event.stopPropagation()"/>
+        <button class="pchip-edit-ok" onclick="commitEdit(${pi},${ci},event)" title="Apply">✓</button>
+        <button class="pchip-edit-cancel" onclick="cancelEdit(${pi},${ci},event)" title="Cancel">✕</button>
+      </div>
+    </div>
+  `).join('');
+
+  const usageSel = p.colors.map(c =>
+    `<div class="usage-item" onclick="copyHex('${c.hex}')">
+      <div class="usage-swatch" style="background:${c.hex}"></div>
+      <div class="usage-role">${c.role}</div>
+    </div>`
+  ).join('');
+
+  row.innerHTML = `
+    <div class="pal-left">
+      <div class="pal-domain-tag">${p.domain_icon||'·'} ${p.domain}</div>
+      <div class="pal-name">${p.name}</div>
+      <div class="pal-mood">${p.mood}</div>
+      <div class="pal-strip" id="strip-${pi}">${swatches}</div>
+      <div class="pal-chips">${chips}</div>
+      <div class="pal-actions">
+        <button class="pal-action-btn" id="shades-btn-${pi}" onclick="toggleShades(${pi})">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="10" height="6" rx="1"/><line x1="3.5" y1="3" x2="3.5" y2="9"/><line x1="6" y1="3" x2="6" y2="9"/><line x1="8.5" y1="3" x2="8.5" y2="9"/></svg>
+          Shades
+        </button>
+        <button class="pal-action-btn" id="refresh-btn-${pi}" onclick="refreshPalette(${pi})">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 6A4 4 0 1 1 6 2"/><polyline points="10,2 10,5 7,5"/></svg>
+          Refresh
+        </button>
+      </div>
+      <div class="shades-panel" id="shades-${pi}"></div>
+    </div>
+    <div class="pal-right">
+      <div class="pal-ref-box">
+        <div class="ref-kicker">reference</div>
+        <div class="ref-title">${p.reference}</div>
+        <div class="ref-body">${p.story}</div>
+      </div>
+      <div>
+        <div class="pal-section-label">colour psychology</div>
+        <div class="pal-body-text">${p.psychology}</div>
+      </div>
+      <div>
+        <div class="pal-section-label">ui roles</div>
+        <div class="usage-row" id="usage-${pi}">${usageSel}</div>
+      </div>
+    </div>
+  `;
+
+  container.appendChild(row);
+}
+
+/* ── HEX EDIT ── */
+function startEdit(pi, ci, e) {
+  e.stopPropagation();
+  const editEl = document.getElementById(`edit-${pi}-${ci}`);
+  if (editEl.classList.contains('visible')) return;
+  editEl.classList.add('visible');
+  const inp = document.getElementById(`edit-input-${pi}-${ci}`);
+  inp.value = palettesData[pi].colors[ci].hex;
+  inp.focus();
+  inp.select();
+}
+
+function previewEdit(pi, ci, val) {
+  if (!isValidHex(val)) return;
+  document.getElementById(`edit-dot-${pi}-${ci}`).style.background = val;
+}
+
+function commitEdit(pi, ci, e) {
+  e && e.stopPropagation();
+  const inp = document.getElementById(`edit-input-${pi}-${ci}`);
+  const val = inp.value.trim();
+  if (!isValidHex(val)) { inp.style.outline = '1px solid #e55'; setTimeout(()=>inp.style.outline='',800); return; }
+  palettesData[pi].colors[ci].hex = val;
+  cancelEdit(pi, ci);
+  refreshChip(pi, ci);
+  refreshStrip(pi);
+  refreshUsage(pi);
+  // if shades panel is open, re-render it
+  const sp = document.getElementById(`shades-${pi}`);
+  if (sp && sp.classList.contains('open')) renderShades(pi);
+  showToast(val + ' applied');
+}
+
+function cancelEdit(pi, ci, e) {
+  e && e.stopPropagation();
+  document.getElementById(`edit-${pi}-${ci}`).classList.remove('visible');
+}
+
+function editKeydown(e, pi, ci) {
+  if (e.key === 'Enter') commitEdit(pi, ci);
+  if (e.key === 'Escape') cancelEdit(pi, ci);
+  e.stopPropagation();
+}
+
+function refreshChip(pi, ci) {
+  const c = palettesData[pi].colors[ci];
+  const dot = document.getElementById(`chip-dot-${pi}-${ci}`);
+  const hexEl = document.getElementById(`chip-hex-${pi}-${ci}`);
+  if (dot) dot.style.background = c.hex;
+  if (hexEl) hexEl.textContent = c.hex;
+}
+
+function refreshStrip(pi) {
+  const strip = document.getElementById(`strip-${pi}`);
+  if (!strip) return;
+  strip.innerHTML = palettesData[pi].colors.map(c =>
+    `<div class="ps-swatch" style="background:${c.hex}" onclick="copyHex('${c.hex}')">
+      <div class="ps-tip"><span class="ps-tip-hex">${c.hex}</span></div>
+    </div>`
+  ).join('');
+}
+
+function refreshUsage(pi) {
+  const u = document.getElementById(`usage-${pi}`);
+  if (!u) return;
+  u.innerHTML = palettesData[pi].colors.map(c =>
+    `<div class="usage-item" onclick="copyHex('${c.hex}')">
+      <div class="usage-swatch" style="background:${c.hex}"></div>
+      <div class="usage-role">${c.role}</div>
+    </div>`
+  ).join('');
+}
+
+/* ── SHADES ── */
+function toggleShades(pi) {
+  const panel = document.getElementById(`shades-${pi}`);
+  const btn = document.getElementById(`shades-btn-${pi}`);
+  if (panel.classList.contains('open')) {
+    panel.classList.remove('open');
+    btn.style.borderColor = '';
+  } else {
+    renderShades(pi);
+    panel.classList.add('open');
+    btn.style.borderColor = 'var(--border-md)';
+  }
+}
+
+function renderShades(pi) {
+  const panel = document.getElementById(`shades-${pi}`);
+  const colors = palettesData[pi].colors;
+  panel.innerHTML = `<div class="pal-section-label" style="margin-bottom:4px">colour shades</div>` +
+    colors.map(c => {
+      const shades = generateShades(c.hex);
+      const cells = shades.map(s =>
+        `<div class="shade-cell" style="background:${s}" onclick="copyHex('${s}')">
+          <span class="shade-cell-tip">${s}</span>
+        </div>`
+      ).join('');
+      return `<div class="shades-row">
+        <div class="shades-label">${c.name}</div>
+        <div class="shades-strip">${cells}</div>
+      </div>`;
+    }).join('');
+}
+
+/* ── REFRESH PALETTE ── */
+async function refreshPalette(pi) {
+  const btn = document.getElementById(`refresh-btn-${pi}`);
+  btn.classList.add('loading');
+  btn.innerHTML = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" style="animation:spin 0.8s linear infinite"><path d="M10 6A4 4 0 1 1 6 2"/><polyline points="10,2 10,5 7,5"/></svg> Refreshing…`;
+
+  const p = palettesData[pi];
+  const sys = `You are a colour strategist for designers. Given a domain and project, return a NEW colour palette as JSON only. No markdown, no backticks. Start with {.
+Schema: {"name":"palette name","mood":"mood phrase","colors":[{"name":"poetic name","hex":"#xxxxxx","role":"primary|secondary|accent|background|text"}]}
+Rules: exactly 5 colors, valid lowercase hex, poetic names, tonally different from typical choices for this domain.`;
+
+  const msg = `Project: ${project}
+Domain: ${p.domain} (${p.domain_icon||''})
+Reference: ${p.reference}
+Generate a fresh alternative palette for this domain and project. Make it tonally different from: ${p.colors.map(c=>c.hex).join(', ')}`;
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 600,
+        system: sys,
+        messages: [{ role: 'user', content: msg }]
+      })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+    const raw = (data.content?.find(b=>b.type==='text')?.text||'').replace(/```json|```/g,'').trim();
+    const fresh = JSON.parse(raw);
+    // patch into palettesData, keep meta
+    palettesData[pi].name = fresh.name || palettesData[pi].name;
+    palettesData[pi].mood = fresh.mood || palettesData[pi].mood;
+    palettesData[pi].colors = fresh.colors;
+    // re-render just this row
+    const old = document.getElementById(`pal-${pi}`);
+    if (old) {
+      const tempContainer = document.createElement('div');
+      renderPaletteRow(palettesData[pi], pi, tempContainer);
+      old.replaceWith(tempContainer.firstChild);
+    }
+    showToast('Palette refreshed');
+  } catch(e) {
+    console.error(e);
+    btn.classList.remove('loading');
+    btn.innerHTML = `<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 6A4 4 0 1 1 6 2"/><polyline points="10,2 10,5 7,5"/></svg> Refresh`;
+    showToast('Refresh failed — try again');
+  }
+}
+
+/* ── UTILS ── */
+function copyHex(hex) {
+  navigator.clipboard.writeText(hex).catch(()=>{});
+  showToast(hex + ' copied');
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('on');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('on'), 1600);
+}
+</script>
+</body>
+</html>
