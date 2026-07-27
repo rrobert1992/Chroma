@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>One — Creative Director</title>
+<title>One — Design Agency</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -29,15 +29,6 @@ header nav a:hover::after{width:100%}
 @media(max-width:640px){header nav a:not(.pill){display:none}}
 .pill{background:var(--ink);color:#fff!important;padding:8px 16px;border-radius:40px}
 .pill::after{display:none!important}
-/* docked mini head */
-.minihead{position:fixed;top:8px;left:50%;z-index:60;width:48px;height:48px;border-radius:50%;overflow:hidden;
-  background:var(--paper);border:1px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.12);
-  transform:translate(-50%,-30px) scale(.6);opacity:0;pointer-events:none;
-  transition:opacity .55s var(--ease),transform .55s var(--ease)}
-.minihead.dock{opacity:1;transform:translate(-50%,0) scale(1)}
-.minihead .mh-inner{width:100%;height:100%;animation:mhbob 3.4s var(--ease) infinite}
-.minihead canvas{width:100%;height:100%;display:block}
-@keyframes mhbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
 
 /* hero */
 .hero{padding:clamp(120px,18vh,200px) var(--gap) clamp(40px,7vh,90px);position:relative;max-width:1000px;margin:0 auto}
@@ -54,26 +45,6 @@ filter:blur(64px);opacity:.5}
 .hero .facts div{background:var(--card);border-radius:16px;padding:13px 17px;min-width:140px}
 .hero .facts h4{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
 .hero .facts p{font-size:14.5px;font-weight:600}
-
-/* scroll-scrubbed head stage */
-.headstage{position:relative;height:340vh}
-.headstage .sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.headstage .blob::before{width:60vw;height:60vw;top:14%;right:auto;left:50%;transform:translateX(-50%);opacity:.42;filter:blur(80px)}
-#head{width:100%;height:100%;display:block}
-.hloader{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--paper);z-index:5;transition:opacity .6s var(--ease)}
-.hloader.gone{opacity:0;pointer-events:none}
-.hloader .bar{width:180px;height:2px;background:var(--line);border-radius:2px;overflow:hidden}
-.hloader .bar i{display:block;height:100%;width:0;background:var(--ink);transition:width .2s linear}
-.hoverlay{position:absolute;inset:0;z-index:4;pointer-events:none}
-.hoverlay .top{position:absolute;top:clamp(88px,13vh,140px);left:var(--gap);right:var(--gap);display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
-.hoverlay h1{font-weight:800;letter-spacing:-.04em;line-height:.9;font-size:clamp(38px,9vw,120px);will-change:transform,opacity}
-.hoverlay h1 .mark{color:var(--dim);font-weight:400}
-.hoverlay .role{text-align:right;max-width:230px}
-.hoverlay .role p{font-size:14px;font-weight:600;margin-top:6px;line-height:1.3}
-.hoverlay .scrollcue{position:absolute;left:50%;bottom:clamp(26px,5vh,54px);transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;will-change:opacity}
-.hoverlay .scrollcue .line{width:1px;height:38px;background:linear-gradient(var(--dim),transparent);animation:cue 1.8s var(--ease) infinite}
-@keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.1%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
-.hoverlay .tagline{position:absolute;left:0;right:0;bottom:clamp(90px,16vh,180px);text-align:center;font-weight:800;letter-spacing:-.03em;font-size:clamp(24px,4.5vw,56px);color:#fff;text-shadow:0 2px 30px rgba(0,0,0,.35);opacity:0;will-change:opacity,transform}
 
 /* masonry work grid */
 .work{padding:clamp(24px,5vh,60px) var(--gap) clamp(40px,8vh,100px)}
@@ -96,15 +67,22 @@ opacity:0;transform:translateY(8px);transition:opacity .5s var(--ease),transform
 .tile .info .yr{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:rgba(255,255,255,.75);margin-top:3px;display:block}
 .tile .pill-open{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:#fff;padding:7px 11px;border-radius:40px;white-space:nowrap;flex:0 0 auto}
 
-/* experience */
-.exp{max-width:1000px;margin:0 auto;padding:clamp(30px,6vh,80px) var(--gap)}
-.exp h2{font-weight:800;letter-spacing:-.03em;font-size:clamp(28px,5vw,54px);margin-bottom:34px}
-.exp ul{list-style:none;border-top:1px solid var(--line)}
-.exp li{display:grid;grid-template-columns:110px 1fr auto;gap:16px;align-items:baseline;padding:20px 0;border-bottom:1px solid var(--line)}
-.exp li .yr{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--dim)}
-.exp li .ro{font-weight:700;font-size:clamp(17px,2.4vw,22px);letter-spacing:-.01em}
-.exp li .co{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
-@media(max-width:600px){.exp li{grid-template-columns:80px 1fr}.exp li .co{grid-column:2;text-align:left}}
+/* services */
+.svc{max-width:1000px;margin:0 auto;padding:clamp(30px,6vh,80px) var(--gap)}
+.svc h2{font-weight:800;letter-spacing:-.03em;font-size:clamp(28px,5vw,54px);margin-bottom:34px}
+.svc ul{list-style:none;border-top:1px solid var(--line)}
+.svc li{display:grid;grid-template-columns:64px 1fr auto;gap:16px;align-items:baseline;padding:22px 0;border-bottom:1px solid var(--line);transition:padding-left .4s var(--ease)}
+.svc li:hover{padding-left:10px}
+.svc li .no{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--dim)}
+.svc li .ro{font-weight:700;font-size:clamp(19px,2.6vw,26px);letter-spacing:-.02em}
+.svc li .co{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+@media(max-width:600px){.svc li{grid-template-columns:44px 1fr}.svc li .co{grid-column:2;text-align:left}}
+
+/* studio */
+.studio{max-width:1000px;margin:0 auto;padding:clamp(30px,6vh,80px) var(--gap)}
+.studio h2{font-weight:800;letter-spacing:-.03em;font-size:clamp(28px,5vw,54px);margin-bottom:26px}
+.studio .prose{max-width:660px;font-size:clamp(16px,2.4vw,21px);line-height:1.55;color:#3a3a40}
+.studio .prose+.prose{margin-top:18px}
 
 /* contact */
 .contact{position:relative;max-width:1000px;margin:0 auto;padding:clamp(50px,9vh,120px) var(--gap) clamp(60px,10vh,130px)}
@@ -124,45 +102,54 @@ opacity:0;transform:translateY(8px);transition:opacity .5s var(--ease),transform
   <a class="brand" href="index.html">One</a>
   <nav>
     <a href="#work">Work</a>
-    <a href="#experience">Experience</a>
+    <a href="#services">Services</a>
+    <a href="#studio">Studio</a>
     <a class="pill" href="#contact">Contact</a>
   </nav>
 </header>
 
 <section class="hero">
-  <span class="cap status"><span class="dot"></span>Available for select work — Dubai, UAE</span>
-  <h1>Creative Director<br>crafting <span class="mark">brands</span><br>that feel calm.</h1>
-  <p class="lede">13 years shaping identity systems, campaigns and visual language — currently building the design language at noon. Off-White sensibility, Helvetica discipline, restraint over noise.</p>
+  <div class="blob"></div>
+  <span class="cap status"><span class="dot"></span>Open for new projects — Dubai, UAE</span>
+  <h1>A design agency<br>crafting <span class="mark">brands</span><br>that feel calm.</h1>
+  <p class="lede">One is a design agency shaping identity systems, campaigns and visual language for ambitious brands. Off-White sensibility, Helvetica discipline — restraint over noise.</p>
   <div class="facts">
-    <div><h4>Now</h4><p>Creative Director · noon</p></div>
+    <div><h4>Studio</h4><p>Brand · System · Campaign</p></div>
     <div><h4>Base</h4><p>Dubai, UAE</p></div>
-    <div><h4>Focus</h4><p>Brand · System · Campaign</p></div>
+    <div><h4>Approach</h4><p>Restraint over noise</p></div>
     <div><h4>Projects</h4><p id="pcount">—</p></div>
   </div>
 </section>
 
 <section class="work" id="work">
   <div class="workhead">
-    <h2>All Works</h2>
+    <h2>Selected Work</h2>
     <span class="cap" id="wcount"></span>
   </div>
   <div class="grid" id="cards"></div>
 </section>
 
-<section class="exp" id="experience">
-  <h2>Experience</h2>
+<section class="svc" id="services">
+  <h2>What we do</h2>
   <ul>
-    <li><span class="yr">2023 — Now</span><span class="ro">Creative Director</span><span class="co">noon</span></li>
-    <li><span class="yr">2021 — 2023</span><span class="ro">Associate Creative Director</span><span class="co">noon</span></li>
-    <li><span class="yr">2019 — 2021</span><span class="ro">Art Director</span><span class="co">Freelance / Studio</span></li>
-    <li><span class="yr">2017 — 2019</span><span class="ro">Senior Visualizer</span><span class="co">Agency</span></li>
-    <li><span class="yr">2013 — 2017</span><span class="ro">Visualizer / Designer</span><span class="co">Agency</span></li>
+    <li><span class="no">01</span><span class="ro">Brand Identity</span><span class="co">Logo · Naming · Guidelines</span></li>
+    <li><span class="no">02</span><span class="ro">Design Systems</span><span class="co">Tokens · Components · Docs</span></li>
+    <li><span class="no">03</span><span class="ro">Campaigns</span><span class="co">Concept · Art Direction · Rollout</span></li>
+    <li><span class="no">04</span><span class="ro">Packaging</span><span class="co">Structure · Print · Finish</span></li>
+    <li><span class="no">05</span><span class="ro">Digital</span><span class="co">Web · Product · Motion</span></li>
+    <li><span class="no">06</span><span class="ro">Art Direction</span><span class="co">Photography · Styling · Story</span></li>
   </ul>
+</section>
+
+<section class="studio" id="studio">
+  <h2>Studio</h2>
+  <p class="prose">One is a design agency. We partner with brands to shape how they look, sound and feel — from identity systems to campaigns and everything the work needs to hold together.</p>
+  <p class="prose">Every engagement starts with restraint: strip the noise, find the signal, and build a visual language that lasts. Discipline over decoration, systems over one-offs.</p>
 </section>
 
 <section class="contact" id="contact">
   <div class="blob"></div>
-  <span class="cap lbl">Get in touch</span><br>
+  <span class="cap lbl">Start a project</span><br>
   <a class="big" href="mailto:rodrigues_robert@live.com">rodrigues_robert@live.com</a>
   <div class="row">
     <div class="socials">
@@ -183,7 +170,7 @@ order.forEach((slug,i)=>{
   const it=items[slug];
   const disp=it.title.includes("—")?it.title.split("—")[1].trim():it.title;
   const a=document.createElement('a');
-  a.className='tile'; a.href='https://rodrigues-folio.higgsfield.app/'+slug+'.html';
+  a.className='tile'; a.href=slug+'.html';
   a.innerHTML=`
     <img loading="lazy" src="${it.cover}" alt="${it.title}">
     <div class="veil"></div>

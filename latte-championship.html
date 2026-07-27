@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Latte Art Championship — One</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+:root{--paper:#ffffff;--ink:#0A0A0A;--dim:#9A9AA2;--line:#0A0A0A12;--card:#F2F3F5;
+--sans:"Helvetica Neue",Helvetica,Arial,sans-serif;--mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+--gap:clamp(20px,4vw,64px);--ease:cubic-bezier(.16,1,.3,1)}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%;height:auto}
+.cap{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+header{position:fixed;top:14px;left:var(--gap);right:var(--gap);z-index:50;display:flex;align-items:center;justify-content:space-between;
+padding:10px 16px;border-radius:40px;background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid var(--line)}
+header a{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;position:relative;padding-bottom:2px;color:var(--ink)}
+header a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:currentColor;transition:width .4s var(--ease)}
+header a:hover::after{width:100%}
+.hero{padding:clamp(100px,15vh,170px) var(--gap) var(--gap);position:relative}
+.blob{position:absolute;inset:0;z-index:-1;overflow:hidden}
+.blob::before{content:"";position:absolute;top:6%;right:-6%;width:44vw;height:44vw;border-radius:50%;
+background:radial-gradient(circle at 30% 30%,#7bdfff,transparent 60%),radial-gradient(circle at 70% 60%,#ff8ac2,transparent 60%),radial-gradient(circle at 50% 80%,#ffd27a,transparent 55%);
+filter:blur(60px);opacity:.5}
+.hero .tag{display:flex;justify-content:space-between;margin-bottom:clamp(24px,5vw,52px)}
+.hero h1{font-weight:800;letter-spacing:-.035em;line-height:.92;font-size:clamp(44px,10vw,150px)}
+.hero .mark{font-weight:400;color:var(--dim)}
+.hero .facts{display:flex;flex-wrap:wrap;gap:12px;margin-top:var(--gap)}
+.hero .facts div{background:var(--card);border-radius:16px;padding:14px 18px;min-width:150px}
+.hero .facts h4{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
+.hero .facts p{font-size:15px;font-weight:600}
+.gallery{padding:0 var(--gap) var(--gap);display:flex;flex-direction:column;gap:clamp(12px,1.6vw,22px);max-width:1100px;margin:0 auto}
+.slide{position:relative;background:var(--card);border-radius:20px;overflow:hidden;opacity:0;transform:translateY(24px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.slide.in{opacity:1;transform:none}
+.slide img{border-radius:20px}
+.slide .idx{position:absolute;top:12px;left:14px;z-index:2;background:rgba(255,255,255,.85);padding:3px 8px;border-radius:20px}
+.next{padding:var(--gap);display:flex;flex-direction:column;gap:24px;min-height:56svh;justify-content:center;max-width:1100px;margin:0 auto}
+.next .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.next a.big{font-weight:800;letter-spacing:-.035em;line-height:.95;font-size:clamp(38px,9vw,120px);display:inline-block}
+.next a.big:hover{color:var(--dim)}
+.next .row{display:flex;flex-wrap:wrap;gap:16px 40px;justify-content:space-between;align-items:flex-end;border-top:1px solid var(--line);padding-top:22px}
+.next .socials{display:flex;gap:10px;flex-wrap:wrap}
+.next .socials a{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:var(--card);padding:9px 14px;border-radius:40px}
+.next .socials a:hover{background:var(--ink);color:#fff}
+::selection{background:var(--ink);color:#fff}
+.deck{padding:0 var(--gap) clamp(12px,1.6vw,22px);max-width:1100px;margin:0 auto}
+.deckwrap{position:relative;border-radius:20px;overflow:hidden;background:#000;max-width:540px;margin:0 auto;box-shadow:0 30px 80px rgba(0,0,0,.18)}
+.deckvid{width:100%;height:auto;display:block}
+.ytbtn{position:absolute;left:14px;bottom:14px;display:inline-flex;align-items:center;gap:8px;background:rgba(10,10,10,.82);color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:10px 15px;border-radius:40px;backdrop-filter:blur(6px);transition:background .3s var(--ease)}
+.ytbtn:hover{background:#FF0000}
+.ytbtn .tri{font-size:9px}
+@media(max-width:820px){.hero .facts div{min-width:44%}}</style>
+</head>
+<body>
+<header>
+  <a href="index.html">&larr; Index</a>
+  <a href="index.html">Latte Art Championship</a>
+</header>
+<section class="hero">
+  <div class="blob"></div>
+  <div class="tag">
+    <span class="cap">&ldquo;National LAC&rdquo;</span>
+    <span class="cap">43 Slides</span>
+  </div>
+  <h1><span class="mark">&ldquo;</span>Latte Art Championship<span class="mark">&rdquo;</span></h1>
+  <div class="facts">
+    <div><h4>Client</h4><p>National LAC</p></div>
+    <div><h4>Role</h4><p>Design Revamp</p></div>
+    <div><h4>Discipline</h4><p>Visual Identity</p></div>
+    <div><h4>Year</h4><p>2023</p></div>
+  </div>
+</section>
+
+<div class="gallery">
+<figure class="slide"><span class="idx cap">01 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/001.jpg" alt="Latte Art Championship slide 1"></figure>
+<figure class="slide"><span class="idx cap">02 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/002.jpg" alt="Latte Art Championship slide 2"></figure>
+<figure class="slide"><span class="idx cap">03 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/003.jpg" alt="Latte Art Championship slide 3"></figure>
+<figure class="slide"><span class="idx cap">04 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/004.jpg" alt="Latte Art Championship slide 4"></figure>
+<figure class="slide"><span class="idx cap">05 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/005.jpg" alt="Latte Art Championship slide 5"></figure>
+<figure class="slide"><span class="idx cap">06 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/006.jpg" alt="Latte Art Championship slide 6"></figure>
+<figure class="slide"><span class="idx cap">07 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/007.jpg" alt="Latte Art Championship slide 7"></figure>
+<figure class="slide"><span class="idx cap">08 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/008.jpg" alt="Latte Art Championship slide 8"></figure>
+<figure class="slide"><span class="idx cap">09 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/009.jpg" alt="Latte Art Championship slide 9"></figure>
+<figure class="slide"><span class="idx cap">10 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/010.jpg" alt="Latte Art Championship slide 10"></figure>
+<figure class="slide"><span class="idx cap">11 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/011.jpg" alt="Latte Art Championship slide 11"></figure>
+<figure class="slide"><span class="idx cap">12 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/012.jpg" alt="Latte Art Championship slide 12"></figure>
+<figure class="slide"><span class="idx cap">13 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/013.jpg" alt="Latte Art Championship slide 13"></figure>
+<figure class="slide"><span class="idx cap">14 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/014.jpg" alt="Latte Art Championship slide 14"></figure>
+<figure class="slide"><span class="idx cap">15 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/015.jpg" alt="Latte Art Championship slide 15"></figure>
+<figure class="slide"><span class="idx cap">16 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/016.jpg" alt="Latte Art Championship slide 16"></figure>
+<figure class="slide"><span class="idx cap">17 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/017.jpg" alt="Latte Art Championship slide 17"></figure>
+<figure class="slide"><span class="idx cap">18 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/018.jpg" alt="Latte Art Championship slide 18"></figure>
+<figure class="slide"><span class="idx cap">19 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/019.jpg" alt="Latte Art Championship slide 19"></figure>
+<figure class="slide"><span class="idx cap">20 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/020.jpg" alt="Latte Art Championship slide 20"></figure>
+<figure class="slide"><span class="idx cap">21 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/021.jpg" alt="Latte Art Championship slide 21"></figure>
+<figure class="slide"><span class="idx cap">22 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/022.jpg" alt="Latte Art Championship slide 22"></figure>
+<figure class="slide"><span class="idx cap">23 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/023.jpg" alt="Latte Art Championship slide 23"></figure>
+<figure class="slide"><span class="idx cap">24 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/024.jpg" alt="Latte Art Championship slide 24"></figure>
+<figure class="slide"><span class="idx cap">25 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/025.jpg" alt="Latte Art Championship slide 25"></figure>
+<figure class="slide"><span class="idx cap">26 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/026.jpg" alt="Latte Art Championship slide 26"></figure>
+<figure class="slide"><span class="idx cap">27 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/027.jpg" alt="Latte Art Championship slide 27"></figure>
+<figure class="slide"><span class="idx cap">28 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/028.jpg" alt="Latte Art Championship slide 28"></figure>
+<figure class="slide"><span class="idx cap">29 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/029.jpg" alt="Latte Art Championship slide 29"></figure>
+<figure class="slide"><span class="idx cap">30 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/030.jpg" alt="Latte Art Championship slide 30"></figure>
+<figure class="slide"><span class="idx cap">31 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/031.jpg" alt="Latte Art Championship slide 31"></figure>
+<figure class="slide"><span class="idx cap">32 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/032.jpg" alt="Latte Art Championship slide 32"></figure>
+<figure class="slide"><span class="idx cap">33 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/033.jpg" alt="Latte Art Championship slide 33"></figure>
+<figure class="slide"><span class="idx cap">34 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/034.jpg" alt="Latte Art Championship slide 34"></figure>
+<figure class="slide"><span class="idx cap">35 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/035.jpg" alt="Latte Art Championship slide 35"></figure>
+<figure class="slide"><span class="idx cap">36 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/036.jpg" alt="Latte Art Championship slide 36"></figure>
+<figure class="slide"><span class="idx cap">37 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/037.jpg" alt="Latte Art Championship slide 37"></figure>
+<figure class="slide"><span class="idx cap">38 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/038.jpg" alt="Latte Art Championship slide 38"></figure>
+<figure class="slide"><span class="idx cap">39 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/039.jpg" alt="Latte Art Championship slide 39"></figure>
+<figure class="slide"><span class="idx cap">40 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/040.jpg" alt="Latte Art Championship slide 40"></figure>
+<figure class="slide"><span class="idx cap">41 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/041.jpg" alt="Latte Art Championship slide 41"></figure>
+<figure class="slide"><span class="idx cap">42 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/042.jpg" alt="Latte Art Championship slide 42"></figure>
+<figure class="slide"><span class="idx cap">43 / 43</span><img loading="lazy" src="https://rodrigues-folio.higgsfield.app/assets/latte-championship/043.jpg" alt="Latte Art Championship slide 43"></figure>
+</div>
+<section class="next">
+  <span class="lbl">Next Project</span>
+  <a class="big" href="zoomcar.html">Zoomcar — What A Trip</a>
+  <div class="row">
+    <div class="socials">
+      <a href="mailto:rodrigues_robert@live.com">Email</a>
+      <a href="https://behance.net/rodriguesrobert" target="_blank" rel="noopener">Behance</a>
+      <a href="index.html">Home</a>
+    </div>
+    <span class="cap">&copy; <span id="yr"></span> One</span>
+  </div>
+</section>
+<script>const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.05});
+document.querySelectorAll('.slide').forEach(s=>io.observe(s));
+document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>
