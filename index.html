@@ -45,6 +45,11 @@ filter:blur(64px);opacity:.5}
 .hero .facts div{background:var(--card);border-radius:16px;padding:13px 17px;min-width:140px}
 .hero .facts h4{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:6px}
 .hero .facts p{font-size:14.5px;font-weight:600}
+.hero .cta{display:inline-flex;align-items:center;gap:10px;margin-top:30px;background:var(--ink);color:#fff;font-family:var(--mono);
+font-size:12px;letter-spacing:.06em;text-transform:uppercase;padding:14px 22px;border-radius:40px;transition:transform .4s var(--ease),background .3s}
+.hero .cta:hover{transform:translateY(-2px);background:#ef282d}
+.hero .cta .dotr{width:7px;height:7px;border-radius:50%;background:#ef282d;box-shadow:0 0 0 4px #ef282d33;transition:background .3s,box-shadow .3s}
+.hero .cta:hover .dotr{background:#fff;box-shadow:0 0 0 4px #ffffff33}
 
 /* masonry work grid */
 .work{padding:clamp(24px,5vh,60px) var(--gap) clamp(40px,8vh,100px)}
@@ -103,7 +108,7 @@ opacity:0;transform:translateY(8px);transition:opacity .5s var(--ease),transform
   <nav>
     <a href="#work">Work</a>
     <a href="#services">Services</a>
-    <a href="#studio">Studio</a>
+    <a href="studio.html">Studio</a>
     <a class="pill" href="#contact">Contact</a>
   </nav>
 </header>
@@ -119,6 +124,7 @@ opacity:0;transform:translateY(8px);transition:opacity .5s var(--ease),transform
     <div><h4>Approach</h4><p>Restraint over noise</p></div>
     <div><h4>Projects</h4><p id="pcount">—</p></div>
   </div>
+  <a class="cta" href="studio.html"><span class="dotr"></span>Enter the Studio — play the looks live</a>
 </section>
 
 <section class="work" id="work">

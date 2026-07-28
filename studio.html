@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>One — Studio</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --paper:#ffffff;--ink:#0A0A0A;--dim:#9A9AA2;--line:#0A0A0A12;--card:#F2F3F5;
+  --stage:#111110;--stageln:rgba(255,255,255,.10);--coral:#ef282d;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  --gap:clamp(16px,3vw,40px);--ease:cubic-bezier(.16,1,.3,1)
+}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.cap{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+/* header */
+header{position:fixed;top:14px;left:var(--gap);right:var(--gap);z-index:50;display:flex;align-items:center;justify-content:space-between;
+padding:10px 18px;border-radius:40px;background:rgba(255,255,255,.72);backdrop-filter:blur(14px);border:1px solid var(--line)}
+header .brand{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+header nav{display:flex;align-items:center;gap:22px}
+header nav a{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;position:relative;padding-bottom:2px}
+header nav a.active{color:var(--coral)}
+header nav a::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:0;background:currentColor;transition:width .4s var(--ease)}
+header nav a:hover::after{width:100%}
+.pill{background:var(--ink);color:#fff!important;padding:8px 16px;border-radius:40px}
+.pill::after{display:none!important}
+@media(max-width:720px){header nav a.hidesm{display:none}}
+
+/* intro */
+.intro{padding:clamp(104px,15vh,150px) var(--gap) 10px;max-width:1280px;margin:0 auto}
+.intro h1{font-weight:800;letter-spacing:-.035em;line-height:.98;font-size:clamp(30px,5.4vw,60px)}
+.intro h1 .mark{color:var(--dim);font-weight:400}
+.intro p{margin-top:14px;max-width:640px;color:#3a3a40;font-size:clamp(15px,2vw,18px);line-height:1.5}
+
+/* studio layout */
+.studio{max-width:1280px;margin:0 auto;padding:18px var(--gap) 40px;display:grid;grid-template-columns:1fr 340px;gap:16px;align-items:start}
+@media(max-width:900px){.studio{grid-template-columns:1fr}}
+/* stage */
+.stage{position:relative;background:var(--stage);border-radius:14px;overflow:hidden;min-height:440px;display:flex;align-items:center;justify-content:center;
+background-image:linear-gradient(var(--stageln) 1px,transparent 1px),linear-gradient(90deg,var(--stageln) 1px,transparent 1px);background-size:26px 26px}
+.stage .media{max-width:100%;max-height:76vh;display:block}
+#vid{display:none}
+.stage .tag{position:absolute;top:12px;left:14px;color:rgba(255,255,255,.6)}
+.stage .exp{position:absolute;top:10px;right:12px;display:flex;gap:8px}
+.btn{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);background:#fff;color:var(--ink);
+padding:9px 14px;border-radius:40px;cursor:pointer;transition:background .3s var(--ease),color .3s var(--ease),border-color .3s}
+.btn:hover{background:var(--ink);color:#fff}
+.btn.ghost{background:rgba(255,255,255,.06);color:#fff;border-color:var(--stageln)}
+.btn.ghost:hover{background:#fff;color:var(--ink)}
+
+/* controls panel */
+.panel{background:var(--card);border-radius:14px;padding:16px;position:sticky;top:84px}
+.panel h3{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin:2px 0 10px}
+.panel .grp+.grp{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-family:var(--mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;border:1px solid var(--line);background:#fff;
+padding:8px 12px;border-radius:40px;cursor:pointer;user-select:none;transition:all .25s var(--ease)}
+.chip:hover{border-color:var(--ink)}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip.look.on{background:var(--coral);border-color:var(--coral)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px}
+.row label{font-size:12.5px;font-weight:600}
+.row .val{font-family:var(--mono);font-size:11px;color:var(--dim)}
+input[type=range]{width:100%;accent-color:var(--coral);margin-top:6px}
+.two{display:flex;gap:10px;align-items:center;margin-top:10px}
+.two label{font-size:12px;font-weight:600;display:flex;align-items:center;gap:7px}
+input[type=color]{width:30px;height:26px;border:1px solid var(--line);border-radius:6px;background:none;cursor:pointer;padding:0}
+/* sources */
+.sources{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;max-height:150px;overflow:auto;margin-top:4px}
+.src{aspect-ratio:1;border-radius:6px;overflow:hidden;cursor:pointer;border:2px solid transparent;background:#0001}
+.src.on{border-color:var(--coral)}
+.src img{width:100%;height:100%;object-fit:cover;display:block}
+.up{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
+.up label{flex:1;min-width:120px;text-align:center}
+.hint{font-family:var(--mono);font-size:10px;letter-spacing:.03em;color:var(--dim);margin-top:9px;line-height:1.5}
+svg.filters{position:absolute;width:0;height:0}
+.foot{max-width:1280px;margin:0 auto;padding:10px var(--gap) 60px}
+.foot a{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.foot a:hover{color:var(--ink)}
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="index.html">One</a>
+  <nav>
+    <a class="hidesm" href="index.html#work">Work</a>
+    <a class="active" href="studio.html">Studio</a>
+    <a class="pill" href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="intro">
+  <span class="cap">One Studio — in-browser effects</span>
+  <h1>Play the <span class="mark">looks.</span></h1>
+  <p>A live effects studio running entirely in your browser. Dither, duotone, threshold, RGB split, grain and more — dragged straight across your own projects, an uploaded photo, or video. Nothing leaves your machine.</p>
+</section>
+
+<section class="studio">
+  <div class="stage" id="stage">
+    <span class="cap tag" id="tag">Sample</span>
+    <div class="exp">
+      <button class="btn ghost" id="reset">Reset</button>
+      <button class="btn ghost" id="save">Save PNG</button>
+    </div>
+    <img class="media" id="img" crossorigin="anonymous" alt="stage">
+    <video class="media" id="vid" playsinline loop muted></video>
+  </div>
+
+  <aside class="panel">
+    <div class="grp">
+      <h3>Effect</h3>
+      <div class="chips" id="looks">
+        <span class="chip look on" data-look="none">None</span>
+        <span class="chip look" data-look="dither">Dither</span>
+        <span class="chip look" data-look="duotone">Duotone</span>
+        <span class="chip look" data-look="threshold">Threshold</span>
+        <span class="chip look" data-look="posterize">Posterize</span>
+        <span class="chip look" data-look="rgbsplit">RGB Split</span>
+      </div>
+      <div id="lookctl"></div>
+    </div>
+
+    <div class="grp">
+      <h3>Overlays</h3>
+      <div class="chips">
+        <span class="chip" id="c-grain">Grain</span>
+        <span class="chip" id="c-liquify">Liquify</span>
+        <span class="chip" id="c-mono">Mono</span>
+        <span class="chip" id="c-invert">Invert</span>
+      </div>
+    </div>
+
+    <div class="grp">
+      <h3>Adjust</h3>
+      <div class="row"><label>Brightness</label><span class="val" id="v-bri">100%</span></div>
+      <input type="range" id="s-bri" min="20" max="200" value="100">
+      <div class="row"><label>Contrast</label><span class="val" id="v-con">100%</span></div>
+      <input type="range" id="s-con" min="20" max="260" value="100">
+      <div class="row"><label>Saturation</label><span class="val" id="v-sat">100%</span></div>
+      <input type="range" id="s-sat" min="0" max="260" value="100">
+      <div class="row"><label>Blur</label><span class="val" id="v-blur">0px</span></div>
+      <input type="range" id="s-blur" min="0" max="20" value="0">
+    </div>
+
+    <div class="grp">
+      <h3>Source</h3>
+      <div class="sources" id="sources"></div>
+      <div class="up">
+        <label class="btn">Upload image<input type="file" id="upimg" accept="image/*" hidden></label>
+        <label class="btn">Upload video<input type="file" id="upvid" accept="video/*" hidden></label>
+      </div>
+      <p class="hint" id="hint">Tip: uploads &amp; video also render live. Save PNG works on uploads; project images are cross-origin, so their filtered frames can't be exported — screenshot instead.</p>
+    </div>
+  </aside>
+</section>
+
+<div class="foot">
+  <a href="index.html">&larr; Back to One</a> &nbsp;·&nbsp;
+  <a href="https://behance.net/rodriguesrobert" target="_blank" rel="noopener">Behance</a>
+</div>
+
+<!-- SVG filter graph, rebuilt from JS -->
+<svg class="filters"><defs><filter id="lb" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"></filter></defs></svg>
+
+<script src="assets/manifest.js"></script>
+<script>
+const $=(s)=>document.querySelector(s);
+const img=$('#img'), vid=$('#vid'), filter=$('#lb'), tag=$('#tag'), hint=$('#hint');
+const state={look:'none',thr:0.5,post:4,dfreq:0.72,damt:0.55,duoA:'#12100e',duoB:'#f4efe4',split:6,
+  grain:false,liquify:false,mono:false,invert:false,bri:1,con:1,sat:1,blur:0,uploaded:false};
+
+/* ---------- source thumbnails from portfolio ---------- */
+const SITE='https://rodrigues-folio.higgsfield.app/';
+const wrap=$('#sources');
+let firstSrc=null;
+try{
+  const P=window.PROJECTS;
+  P.order.forEach((slug,i)=>{
+    const it=P.items[slug];
+    const d=document.createElement('div'); d.className='src'; d.dataset.i=i;
+    d.innerHTML=`<img loading="lazy" crossorigin="anonymous" src="${it.cover}" alt="${slug}">`;
+    d.addEventListener('click',()=>setImage(it.cover, (it.title||slug), false, d));
+    wrap.appendChild(d);
+    if(i===0) firstSrc=d;
+  });
+}catch(e){}
+
+/* ---------- source handling ---------- */
+function showImg(){img.style.display='block';vid.style.display='none';vid.pause?.();}
+function showVid(){vid.style.display='block';img.style.display='none';}
+function setImage(url,label,uploaded,el){
+  showImg(); img.src=url; tag.textContent=label||'Image'; state.uploaded=!!uploaded;
+  document.querySelectorAll('.src').forEach(s=>s.classList.remove('on'));
+  if(el) el.classList.add('on');
+  apply();
+}
+function setVideo(url,label){
+  showVid(); vid.src=url; vid.play().catch(()=>{}); tag.textContent=label||'Video'; state.uploaded=true;
+  document.querySelectorAll('.src').forEach(s=>s.classList.remove('on'));
+  apply();
+}
+$('#upimg').addEventListener('change',e=>{const f=e.target.files[0];if(f)setImage(URL.createObjectURL(f),'Upload',true);});
+$('#upvid').addEventListener('change',e=>{const f=e.target.files[0];if(f)setVideo(URL.createObjectURL(f),'Video');});
+
+/* generated sample so the studio works with zero network */
+function sampleDataURL(){
+  const c=document.createElement('canvas');c.width=900;c.height=1120;const x=c.getContext('2d');
+  const g=x.createLinearGradient(0,0,900,1120);g.addColorStop(0,'#f7d774');g.addColorStop(.5,'#ef7d6a');g.addColorStop(1,'#5b6cff');
+  x.fillStyle=g;x.fillRect(0,0,900,1120);
+  const r=x.createRadialGradient(560,430,40,520,470,520);r.addColorStop(0,'rgba(255,255,255,.95)');r.addColorStop(1,'rgba(255,255,255,0)');
+  x.fillStyle=r;x.fillRect(0,0,900,1120);
+  x.globalAlpha=.5;x.fillStyle='#0a0a0a';x.beginPath();x.arc(360,760,150,0,7);x.fill();
+  x.globalAlpha=.35;x.beginPath();x.moveTo(120,120);x.lineTo(420,120);x.lineTo(120,520);x.closePath();x.fill();
+  x.globalAlpha=1;return c.toDataURL('image/jpeg',0.9);
+}
+
+/* ---------- SVG filter builder ---------- */
+function hex(h){return[parseInt(h.slice(1,3),16)/255,parseInt(h.slice(3,5),16)/255,parseInt(h.slice(5,7),16)/255];}
+function esc(n){return (Math.round(n*10000)/10000);}
+function buildLook(){
+  const L=state.look; let s='';
+  if(L==='threshold'){
+    const off=esc(0.5-state.thr);
+    s+=`<feColorMatrix type="saturate" values="0"/>`;
+    s+=`<feComponentTransfer><feFuncR type="linear" slope="1" intercept="${off}"/><feFuncG type="linear" slope="1" intercept="${off}"/><feFuncB type="linear" slope="1" intercept="${off}"/></feComponentTransfer>`;
+    s+=`<feComponentTransfer><feFuncR type="discrete" tableValues="0 1"/><feFuncG type="discrete" tableValues="0 1"/><feFuncB type="discrete" tableValues="0 1"/></feComponentTransfer>`;
+  }else if(L==='posterize'){
+    const n=Math.max(2,state.post);const tv=Array.from({length:n},(_,i)=>esc(i/(n-1))).join(' ');
+    s+=`<feComponentTransfer><feFuncR type="discrete" tableValues="${tv}"/><feFuncG type="discrete" tableValues="${tv}"/><feFuncB type="discrete" tableValues="${tv}"/></feComponentTransfer>`;
+  }else if(L==='duotone'){
+    const a=hex(state.duoA),b=hex(state.duoB);
+    s+=`<feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0 0 0 1 0"/>`;
+    s+=`<feComponentTransfer><feFuncR type="table" tableValues="${esc(a[0])} ${esc(b[0])}"/><feFuncG type="table" tableValues="${esc(a[1])} ${esc(b[1])}"/><feFuncB type="table" tableValues="${esc(a[2])} ${esc(b[2])}"/></feComponentTransfer>`;
+  }else if(L==='dither'){
+    const a=hex(state.duoA),b=hex(state.duoB);
+    s+=`<feColorMatrix type="saturate" values="0" result="g"/>`;
+    s+=`<feTurbulence type="fractalNoise" baseFrequency="${esc(state.dfreq)}" numOctaves="1" seed="7" stitchTiles="stitch" result="n"/>`;
+    s+=`<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.33 0.33 0.33 0 0" result="na"/>`;
+    // centered noise scaled by amount, put back to color channels
+    s+=`<feComponentTransfer in="na" result="ns"><feFuncA type="linear" slope="${esc(state.damt)}" intercept="${esc(-state.damt/2)}"/></feComponentTransfer>`;
+    s+=`<feColorMatrix in="ns" type="matrix" values="0 0 0 1 0  0 0 0 1 0  0 0 0 1 0  0 0 0 0 1" result="nc"/>`;
+    s+=`<feComposite in="g" in2="nc" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="sum"/>`;
+    s+=`<feComponentTransfer in="sum"><feFuncR type="discrete" tableValues="0 1"/><feFuncG type="discrete" tableValues="0 1"/><feFuncB type="discrete" tableValues="0 1"/><feFuncA type="linear" slope="0" intercept="1"/></feComponentTransfer>`;
+    s+=`<feComponentTransfer><feFuncR type="table" tableValues="${esc(a[0])} ${esc(b[0])}"/><feFuncG type="table" tableValues="${esc(a[1])} ${esc(b[1])}"/><feFuncB type="table" tableValues="${esc(a[2])} ${esc(b[2])}"/></feComponentTransfer>`;
+  }else if(L==='rgbsplit'){
+    const dx=state.split;
+    s+=`<feColorMatrix type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r"/><feOffset in="r" dx="${dx}" dy="0" result="ro"/>`;
+    s+=`<feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="gc"/>`;
+    s+=`<feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"/><feOffset in="b" dx="${-dx}" dy="0" result="bo"/>`;
+    s+=`<feComposite in="ro" in2="gc" operator="arithmetic" k1="0" k2="1" k3="1" k4="0" result="rg"/>`;
+    s+=`<feComposite in="rg" in2="bo" operator="arithmetic" k1="0" k2="1" k3="1" k4="0"/>`;
+  }
+  return s;
+}
+function buildOverlays(prevIsFilter){
+  let s='';
+  if(state.liquify){
+    s+=`<feTurbulence type="turbulence" baseFrequency="0.012 0.02" numOctaves="2" seed="4" result="lqn"><animate attributeName="seed" from="0" to="40" dur="14s" repeatCount="indefinite"/></feTurbulence>`;
+    s+=`<feDisplacementMap in="SourceGraphic2" in2="lqn" scale="26" xChannelSelector="R" yChannelSelector="G"/>`;
+  }
+  if(state.grain){
+    s+=`<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="grn"/>`;
+    s+=`<feColorMatrix in="grn" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.4 0.4 0.4 0 0" result="grna"/>`;
+    s+=`<feComponentTransfer in="grna" result="grf"><feFuncA type="linear" slope="0.35" intercept="0"/></feComponentTransfer>`;
+    s+=`<feComposite in="grf" in2="__PREV__" operator="over"/>`;
+  }
+  return s;
+}
+function apply(){
+  // build SVG filter innerHTML
+  let inner='';
+  const look=buildLook();
+  // liquify displaces the (already-looked) graphic — emulate by wrapping: we apply look first, then displacement, then grain
+  let chain='';
+  if(look){ chain+=look; }
+  // liquify: displace the current result using a turbulence map
+  if(state.liquify){
+    chain+=`<feTurbulence type="turbulence" baseFrequency="0.010 0.018" numOctaves="2" seed="4" result="lqn"><animate attributeName="baseFrequency" dur="18s" values="0.010 0.018;0.016 0.010;0.010 0.018" repeatCount="indefinite"/></feTurbulence>`;
+    chain+=`<feDisplacementMap in2="lqn" scale="24" xChannelSelector="R" yChannelSelector="G" result="disp"/>`;
+  }
+  if(state.grain){
+    chain+=`<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="grn"/>`;
+    chain+=`<feColorMatrix in="grn" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.5 0.5 0.5 0 0" result="grna"/>`;
+    chain+=`<feComponentTransfer in="grna" result="grf"><feFuncA type="linear" slope="0.32" intercept="0"/></feComponentTransfer>`;
+    chain+=`<feBlend mode="overlay" in="grf"/>`;
+  }
+  filter.innerHTML=chain;
+  const useSVG = state.look!=='none' || state.grain || state.liquify;
+  const parts=[];
+  parts.push(`brightness(${state.bri})`,`contrast(${state.con})`,`saturate(${state.sat})`);
+  if(state.blur>0)parts.push(`blur(${state.blur}px)`);
+  if(state.mono)parts.push('grayscale(1)');
+  if(state.invert)parts.push('invert(1)');
+  if(useSVG)parts.push('url(#lb)');
+  const f=parts.join(' ');
+  img.style.filter=f; vid.style.filter=f;
+}
+
+/* ---------- look-specific controls ---------- */
+const lookctl=$('#lookctl');
+function slider(id,label,min,max,val,step,unit){
+  return `<div class="row"><label>${label}</label><span class="val" id="v-${id}">${val}${unit||''}</span></div><input type="range" id="${id}" min="${min}" max="${max}" step="${step||1}" value="${val}">`;
+}
+function renderLookCtl(){
+  const L=state.look; let h='';
+  if(L==='threshold') h=slider('thr','Level',5,95,Math.round(state.thr*100),1,'%');
+  else if(L==='posterize') h=slider('post','Levels',2,8,state.post,1,'');
+  else if(L==='rgbsplit') h=slider('split','Offset',0,30,state.split,1,'px');
+  else if(L==='dither'){ h=slider('dfreq','Grain',20,140,Math.round(state.dfreq*100),1,'')+slider('damt','Depth',10,100,Math.round(state.damt*100),1,'%')
+      +`<div class="two"><label>Ink<input type="color" id="duoA" value="${state.duoA}"></label><label>Paper<input type="color" id="duoB" value="${state.duoB}"></label></div>`;}
+  else if(L==='duotone') h=`<div class="two"><label>Shadow<input type="color" id="duoA" value="${state.duoA}"></label><label>Light<input type="color" id="duoB" value="${state.duoB}"></label></div>`;
+  lookctl.innerHTML=h;
+  bindLookCtl();
+}
+function bindLookCtl(){
+  const map={thr:(v)=>state.thr=v/100,post:(v)=>state.post=+v,split:(v)=>state.split=+v,dfreq:(v)=>state.dfreq=v/100,damt:(v)=>state.damt=v/100};
+  Object.keys(map).forEach(id=>{const el=document.getElementById(id);if(!el)return;el.addEventListener('input',()=>{map[id](+el.value);const lab=document.getElementById('v-'+id);if(lab)lab.textContent=el.value+(id==='thr'||id==='damt'?'%':id==='split'?'px':'');apply();});});
+  ['duoA','duoB'].forEach(id=>{const el=document.getElementById(id);if(el)el.addEventListener('input',()=>{state[id]=el.value;apply();});});
+}
+
+/* ---------- events ---------- */
+document.querySelectorAll('.chip.look').forEach(c=>c.addEventListener('click',()=>{
+  document.querySelectorAll('.chip.look').forEach(x=>x.classList.remove('on'));c.classList.add('on');
+  state.look=c.dataset.look;renderLookCtl();apply();
+}));
+function toggle(id,key){const el=$('#'+id);el.addEventListener('click',()=>{state[key]=!state[key];el.classList.toggle('on',state[key]);apply();});}
+toggle('c-grain','grain');toggle('c-liquify','liquify');toggle('c-mono','mono');toggle('c-invert','invert');
+[['s-bri','bri','v-bri','%'],['s-con','con','v-con','%'],['s-sat','sat','v-sat','%'],['s-blur','blur','v-blur','px']].forEach(([sid,key,vid,u])=>{
+  const el=$('#'+sid);el.addEventListener('input',()=>{state[key]=key==='blur'?+el.value:el.value/100;$('#'+vid).textContent=el.value+u;apply();});
+});
+$('#reset').addEventListener('click',()=>location.reload());
+$('#save').addEventListener('click',save);
+
+/* ---------- export (works for same-origin uploads / sample) ---------- */
+function save(){
+  const isVid=vid.style.display!=='none';
+  const src=isVid?vid:img;
+  const w=isVid?(vid.videoWidth||900):(img.naturalWidth||900);
+  const h=isVid?(vid.videoHeight||1120):(img.naturalHeight||1120);
+  const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
+  const parts=[`brightness(${state.bri})`,`contrast(${state.con})`,`saturate(${state.sat})`];
+  if(state.blur>0)parts.push(`blur(${state.blur}px)`);
+  if(state.mono)parts.push('grayscale(1)');
+  if(state.invert)parts.push('invert(1)');
+  const useSVG=state.look!=='none'||state.grain||state.liquify;
+  if(useSVG)parts.push('url(#lb)');
+  try{ x.filter=parts.join(' '); x.drawImage(src,0,0,w,h);
+    const url=c.toDataURL('image/png');
+    const a=document.createElement('a');a.href=url;a.download='one-studio.png';a.click();
+  }catch(e){
+    hint.textContent='Export blocked: this source is cross-origin (your hosted project image). Upload the photo or use the sample to export — or screenshot the stage.';
+    hint.style.color='var(--coral)';
+  }
+}
+
+/* ---------- init ---------- */
+setImage(sampleDataURL(),'Sample',true);
+renderLookCtl();
+</script>
+</body>
+</html>
