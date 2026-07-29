@@ -106,7 +106,7 @@ svg.filters{position:absolute;width:0;height:0}
       <button class="btn ghost" id="reset">Reset</button>
       <button class="btn ghost" id="save">Save PNG</button>
     </div>
-    <img class="media" id="img" crossorigin="anonymous" alt="stage">
+    <img class="media" id="img" alt="stage">
     <video class="media" id="vid" playsinline loop muted></video>
   </div>
 
@@ -182,7 +182,7 @@ try{
   P.order.forEach((slug,i)=>{
     const it=P.items[slug];
     const d=document.createElement('div'); d.className='src'; d.dataset.i=i;
-    d.innerHTML=`<img loading="lazy" crossorigin="anonymous" src="${it.cover}" alt="${slug}">`;
+    d.innerHTML=`<img loading="lazy" src="${it.cover}" alt="${slug}">`;
     d.addEventListener('click',()=>setImage(it.cover, (it.title||slug), false, d));
     wrap.appendChild(d);
     if(i===0) firstSrc=d;
