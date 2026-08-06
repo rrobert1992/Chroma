@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glow — noon Private-Label Beauty — Rodrigues Robert</title>
+<style>
+  :root{--bg:#fff;--ink:#111;--muted:#8a8a8a;--line:#ececec;--font:'Helvetica Neue',Helvetica,Arial,sans-serif;--glow:#ff5e8a}
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--font);background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.45}
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);backdrop-filter:saturate(180%) blur(12px);border-bottom:1px solid var(--line)}
+  .nav{max-width:1400px;margin:0 auto;padding:14px 32px;display:flex;justify-content:space-between;align-items:center}
+  .brand{font-weight:700;letter-spacing:.14em;font-size:13px;text-transform:uppercase}
+  .menu{display:flex;gap:24px;align-items:center}
+  .menu a{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:#333}
+  .btn{background:#111;color:#fff;padding:9px 18px;border-radius:999px}
+  .hero{position:relative;max-width:1400px;margin:0 auto;padding:70px 32px 40px;overflow:hidden}
+  .hero:before{content:"";position:absolute;top:-120px;right:-80px;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle at center,rgba(255,94,138,.28),rgba(255,158,109,.12) 45%,transparent 70%);pointer-events:none}
+  .back{position:relative;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:inline-block;margin-bottom:38px}
+  .back:hover{color:#111}
+  .hero h1{position:relative;font-size:clamp(44px,9vw,120px);line-height:.95;font-weight:700;letter-spacing:-.03em}
+  .lede{position:relative;margin-top:30px;max-width:700px;font-size:clamp(17px,2.2vw,22px);font-weight:300;color:#444;line-height:1.55}
+  .meta{max-width:1400px;margin:0 auto;padding:40px 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;border-top:1px solid var(--ink);border-bottom:1px solid var(--line)}
+  .meta .k{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .meta .v{font-size:15px;color:#111}
+
+  .block{max-width:1400px;margin:0 auto;padding:60px 32px}
+  .block .grid2{display:grid;grid-template-columns:230px 1fr;gap:24px;align-items:start}
+  .block h2{font-size:14px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+  .block .body{max-width:720px;font-size:clamp(16px,1.8vw,19px);font-weight:300;color:#333;line-height:1.65}
+  .block .body p+p{margin-top:18px}
+  .rule{max-width:1400px;margin:0 auto;border-top:1px solid var(--line)}
+
+  /* Naming routes */
+  .routes{max-width:1400px;margin:0 auto;padding:20px 32px 40px;display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  .route{border:1px solid var(--line);border-radius:10px;padding:30px}
+  .route .tag{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .route h3{font-size:20px;font-weight:700;margin:8px 0 4px}
+  .route .desc{font-size:14px;font-weight:300;color:#666;line-height:1.5;margin-bottom:22px}
+  .names{display:flex;flex-wrap:wrap;gap:10px}
+  .names span{font-size:19px;font-weight:700;letter-spacing:-.01em;padding:10px 16px;border-radius:999px;background:#f5f5f5}
+  .names span.pick{background:linear-gradient(120deg,#ff5e8a,#ff9e6d);color:#fff}
+
+  .embed{max-width:1400px;margin:0 auto;padding:20px 32px 40px}
+  .embed .frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:10px;overflow:hidden;border:1px solid var(--line);background:#fafafa}
+  .embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .embed .cap{margin-top:14px;font-size:13px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  .embed .cap a{border-bottom:1px solid #ccc}
+
+  .next{max-width:1400px;margin:0 auto;padding:20px 32px 90px}
+  .next a{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--ink);padding-top:28px;font-size:clamp(26px,5vw,52px);font-weight:700;letter-spacing:-.02em}
+  .next a:hover{opacity:.6}
+  footer{max-width:1400px;margin:0 auto;padding:40px 32px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-top:1px solid var(--line)}
+  @media(max-width:820px){.nav{padding:12px 20px}.menu a:not(.btn){display:none}
+    .hero,.meta,.block,.routes,.embed,.next,footer{padding-left:20px;padding-right:20px}
+    .meta{grid-template-columns:1fr 1fr}.block .grid2{grid-template-columns:1fr;gap:10px}.routes{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <nav class="nav">
+    <a href="../index.html" class="brand">Rodrigues Robert</a>
+    <div class="menu">
+      <a href="../index.html#work">Work</a>
+      <a href="../index.html#experience">Experience</a>
+      <a href="mailto:rodrigues_robert@live.com" class="btn">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <a href="../index.html#work" class="back">← Back to work</a>
+  <h1>Glow</h1>
+  <p class="lede">A private-label beauty line for noon — and the naming strategy that gave it a name of its own. Instead of a generic "Beauty" label, the work carves out a distinct, contemporary identity that can stand beside dedicated players in the category.</p>
+</section>
+
+<div class="meta">
+  <div><div class="k">Client</div><div class="v">noon</div></div>
+  <div><div class="k">Role</div><div class="v">Creative Direction · Brand Naming · Identity</div></div>
+  <div><div class="k">Year</div><div class="v">2026</div></div>
+  <div><div class="k">Deliverables</div><div class="v">Naming strategy · Identity · Packaging design</div></div>
+</div>
+
+<section class="block">
+  <div class="grid2">
+    <h2>The brand</h2>
+    <div class="body">
+      <p>noon is one of the region's largest e-commerce platforms, and "beauty" is already a major category on the app. So a private-label beauty range couldn't simply be called <em>Beauty</em> — it needed its own name, its own presence, and a reason to be chosen on a shelf full of trusted brands.</p>
+      <p>Private label is usually read as the low-cost compromise next to the main draw. In beauty especially, value lives in the brand behind the bottle. The brief, then, was to build a label that feels intentional and current — a glow-led identity that earns its place rather than undercutting it.</p>
+    </div>
+  </div>
+</section>
+<div class="rule"></div>
+
+<section class="block">
+  <div class="grid2">
+    <h2>Thought process</h2>
+    <div class="body">
+      <p>We started from a simple tension: private-label beauty is only worth as much as the brand you build around it. Rather than lean on the parent category, we gave the line a distinct name so it could be positioned with its own character.</p>
+      <p>Names were explored in two buckets. <strong>Direct</strong> names cue the category and benefit instantly — quick to read, but harder to own. <strong>Thematic</strong> names carry more playfulness and edge, and let the line sit alongside dedicated players; the individual product names (Sebum Remover, Face Serum, and so on) do the work of establishing category context, so the master brand is free to have personality. That thinking pointed toward a glow-forward route — warm, confident, and unmistakably beauty.</p>
+    </div>
+  </div>
+</section>
+
+<section class="routes">
+  <div class="route">
+    <div class="tag">Approach 1 — Direct names</div>
+    <h3>Cue the category instantly</h3>
+    <p class="desc">Instantly legible and benefit-led, at the cost of uniqueness and ownability.</p>
+    <div class="names"><span>noon Glam</span><span>noon Looks</span><span>noon Wow!</span></div>
+  </div>
+  <div class="route">
+    <div class="tag">Approach 2 — Thematic names</div>
+    <h3>Personality &amp; ownability</h3>
+    <p class="desc">More playful and edged — able to exist alongside dedicated category players, with product names supplying the context.</p>
+    <div class="names"><span>noon Swoon</span><span>noon Kit</span><span class="pick">noon Glowup</span></div>
+  </div>
+</section>
+
+<section class="embed">
+  <div class="frame">
+    <iframe src="https://docs.google.com/presentation/d/1KV9CZonWW1KqzBeABiHvegwWfFtfSyVg2jngLndtWkA/embed?start=false&loop=false&delayms=5000" allowfullscreen title="Glow — noon private-label beauty deck"></iframe>
+  </div>
+  <div class="cap">
+    <span>Naming strategy &amp; design work — full deck (37 slides).</span>
+    <a href="https://docs.google.com/presentation/d/1KV9CZonWW1KqzBeABiHvegwWfFtfSyVg2jngLndtWkA/edit" target="_blank" rel="noopener">Open the deck ↗</a>
+  </div>
+</section>
+
+<section class="next">
+  <a href="ola-pitch.html">Next — OLA Pitch <span>↗</span></a>
+</section>
+
+<footer>
+  <span>© 2026 Rodrigues Robert</span>
+  <span>Creative Director · Brand &amp; Campaigns</span>
+  <span>Dubai, UAE</span>
+</footer>
+</body>
+</html>
